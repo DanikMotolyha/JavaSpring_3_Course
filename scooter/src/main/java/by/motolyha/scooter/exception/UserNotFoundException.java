@@ -1,0 +1,9 @@
+package by.motolyha.scooter.exception;
+
+public class UserNotFoundException extends RuntimeException {
+
+    public UserNotFoundException(String message) {
+
+        super(message);
+    }
+}
