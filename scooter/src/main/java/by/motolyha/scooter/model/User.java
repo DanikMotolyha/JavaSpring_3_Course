@@ -2,22 +2,25 @@ package by.motolyha.scooter.model;
 
 
 import lombok.Data;
-import org.springframework.util.DigestUtils;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Data
 @Table(name = "users")
-public class User {
+public class User implements Serializable {
+
+    @OneToMany(mappedBy = "user")
+    Set<Orders> orders;
 
     @Id
     @NotNull
     @Column(name = "Id")
-    private int id;
+    private int userId;
 
     @NotNull
     @Column(name = "Name")
@@ -58,6 +61,6 @@ public class User {
                 "\n\tLogin: %s" +
                 "\n\tSerName: %s" +
                 "\n\tPassword: %s" +
-                "\n\tMail: %s", id, name, serName, login, password, mail);
+                "\n\tMail: %s", userId, name, serName, login, password, mail);
     }
 }

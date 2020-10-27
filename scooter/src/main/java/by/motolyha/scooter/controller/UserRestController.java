@@ -4,6 +4,8 @@ import by.motolyha.scooter.model.User;
 import by.motolyha.scooter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -29,7 +31,8 @@ public class UserRestController {
     }
 
     @PostMapping()
-    void addUser(@RequestBody @Valid User user) {
+    void addUser(@RequestBody @Valid User user,
+                 BindingResult bindingResult, Model model) {
         userService.save(user);
     }
 
