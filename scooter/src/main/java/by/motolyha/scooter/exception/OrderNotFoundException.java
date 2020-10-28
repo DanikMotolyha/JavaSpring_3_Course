@@ -2,8 +2,8 @@ package by.motolyha.scooter.exception;
 
 public class OrderNotFoundException extends RuntimeException {
 
-    public OrderNotFoundException(int id) {
+    public OrderNotFoundException(String message) {
 
-        super(String.format("Order with Id %d not found", id));
+        super(message);
     }
 }

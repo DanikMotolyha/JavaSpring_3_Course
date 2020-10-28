@@ -17,10 +17,10 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public User findById(int userId) {
-        return userRepository.findById(userId)
+    public User findById(int id) {
+        return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(
-                        String.format("User with Id %d not found", userId)));
+                        String.format("User with Id %d not found", id)));
     }
 
     @Override
@@ -40,17 +40,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(int userId) {
-        if (userRepository.findById(userId).isPresent()) {
-            userRepository.deleteById(userId);
+    public void delete(int id) {
+        if (userRepository.findById(id).isPresent()) {
+            userRepository.deleteById(id);
         } else throw new UserNotFoundException(
-                String.format("User with Id %d not found", userId));
+                String.format("User with Id %d not found", id));
     }
 
     @Override
-    public void updateUser(User user, int userId) {
-        if (userRepository.findById(userId).isPresent()) {
-            User userLink = this.userRepository.findById(userId).get();
+    public void update(User user, int id) {
+        if (userRepository.findById(id).isPresent()) {
+            User userLink = this.userRepository.findById(id).get();
             userLink.setName(user.getName());
             userLink.setSerName(user.getSerName());
             userLink.setLogin(user.getLogin());
@@ -59,6 +59,6 @@ public class UserServiceImpl implements UserService {
             userLink.setMail(user.getMail());
             this.userRepository.save(userLink);
         } else throw new UserNotFoundException(
-                String.format("User with Id %d not found", userId));
+                String.format("User with Id %d not found", id));
     }
 }

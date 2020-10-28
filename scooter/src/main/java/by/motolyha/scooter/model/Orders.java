@@ -18,15 +18,6 @@ public class Orders implements Serializable {
     @Column(name = "Id")
     private int ordersId;
 
-    @ManyToOne
-    @JoinColumn(name = "User_id")
-    User user;
-
-    @ManyToOne
-    @JoinColumn(name = "Scooter_id")
-    Scooter scooter;
-
-
     @NotNull
     @Column(name = "Count")
     private int count;
@@ -38,4 +29,12 @@ public class Orders implements Serializable {
     @NotNull
     @Column(name = "End_rent")
     private Date endRent;
+
+    @ManyToOne
+    @JoinColumn(name = "User_id")
+    User user;
+
+    @ManyToOne
+    @JoinColumn(name = "Scooter_id")
+    Scooter scooter;
 }

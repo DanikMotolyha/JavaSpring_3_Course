@@ -2,6 +2,7 @@ package by.motolyha.scooter.model;
 
 
 import lombok.Data;
+import org.springframework.web.bind.annotation.Mapping;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -13,9 +14,6 @@ import java.util.Set;
 @Data
 @Table(name = "users")
 public class User implements Serializable {
-
-    @OneToMany(mappedBy = "user")
-    Set<Orders> orders;
 
     @Id
     @NotNull
@@ -42,6 +40,13 @@ public class User implements Serializable {
     @Column(name = "Mail")
     private String mail;
 
+    @OneToMany(mappedBy = "user")
+    Set<Orders> orders;
+
+    @ManyToOne
+    @JoinColumn(name = "User_type")
+    UserType userType;
+
     public User(String name, String serName, String login, String pass, String mail) {
         this.name = name;
         this.serName = serName;
@@ -57,10 +62,11 @@ public class User implements Serializable {
     public String toString() {
         return String.format("User: " +
                 "\n\tId: %d" +
+                "\n\tuser_type: %d" +
                 "\n\tName: %s" +
                 "\n\tLogin: %s" +
                 "\n\tSerName: %s" +
                 "\n\tPassword: %s" +
-                "\n\tMail: %s", userId, name, serName, login, password, mail);
+                "\n\tMail: %s", userId, userType.getUserTypeId(), name, serName, login, password, mail);
     }
 }

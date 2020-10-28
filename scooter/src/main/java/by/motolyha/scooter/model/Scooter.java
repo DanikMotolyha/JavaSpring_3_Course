@@ -11,9 +11,6 @@ import java.util.Set;
 @Table(name = "scooter")
 public class Scooter implements Serializable {
 
-    @OneToMany(mappedBy = "scooter")
-    Set<Orders> orders;
-
     @Id
     @NotNull
     @Column(name = "Id")
@@ -26,5 +23,8 @@ public class Scooter implements Serializable {
     @NotNull
     @Column(name = "Price")
     private int price;
+
+    @OneToMany(mappedBy = "scooter")
+    Set<Orders> orders;
 }
 

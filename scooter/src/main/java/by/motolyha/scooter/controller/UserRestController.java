@@ -38,7 +38,7 @@ public class UserRestController {
 
     @PutMapping(value = "/{userId}")
     void updateUser(@RequestBody @Valid User user, @PathVariable int userId) {
-        userService.updateUser(user, userId);
+        userService.update(user, userId);
     }
 
     @DeleteMapping(value = "/{userId}")

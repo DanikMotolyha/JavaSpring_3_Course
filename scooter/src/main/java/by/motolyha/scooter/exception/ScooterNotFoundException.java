@@ -2,8 +2,8 @@ package by.motolyha.scooter.exception;
 
 public class ScooterNotFoundException extends RuntimeException {
 
-    public ScooterNotFoundException(int id) {
+    public ScooterNotFoundException(String message) {
 
-        super(String.format("Scooter with Id %d not found", id));
+        super(message);
     }
 }
