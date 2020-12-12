@@ -1,23 +1,39 @@
-package by.motolyha.scooter.service;
+package by.motolyha.scooter.service.impl;
 
 import by.motolyha.scooter.exception.NoDataFoundException;
 import by.motolyha.scooter.exception.UserNotFoundException;
 import by.motolyha.scooter.model.User;
+import by.motolyha.scooter.model.UserType;
 import by.motolyha.scooter.repository.UserRepository;
+import by.motolyha.scooter.repository.UserTypeRepository;
+import by.motolyha.scooter.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
 
+    private final static Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserTypeRepository UserTypeRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public User findByLogin(String login){
+        return userRepository.findByLogin(login);
+    }
 
     @Override
     public User findById(int id) {
+        LOGGER.info("findById");
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(
                         String.format("User with Id %d not found", id)));
@@ -25,8 +41,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(User user) {
-        user.setPassword(
-                DigestUtils.md5DigestAsHex(user.getPassword().getBytes()).toUpperCase());
+        UserType type = UserTypeRepository.findByUserType("ROLE_USER");
+        user.setUserType(type);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         this.userRepository.save(user);
     }
 
@@ -38,7 +55,15 @@ public class UserServiceImpl implements UserService {
         }
         return users;
     }
-
+    public User findByLoginAndPassword(String login, String password) {
+        User userEntity = findByLogin(login);
+        if (userEntity != null) {
+            if (passwordEncoder.matches(password, userEntity.getPassword())) {
+                return userEntity;
+            }
+        }
+        return null;
+    }
     @Override
     public void delete(int id) {
         if (userRepository.findById(id).isPresent()) {

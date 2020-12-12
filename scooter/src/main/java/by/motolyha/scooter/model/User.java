@@ -16,15 +16,15 @@ import java.util.Set;
 public class User implements Serializable {
 
     @Id
-    @NotNull
+    @NotBlank(message = "Name is mandatory")
     @Column(name = "Id")
     private int userId;
 
-    @NotNull
+    @NotBlank(message = "Name is mandatory")
     @Column(name = "Name")
     private String name;
 
-    @NotNull
+    @NotBlank(message = "Name is mandatory")
     @Column(name = "Sername")
     private String serName;
 
@@ -32,11 +32,11 @@ public class User implements Serializable {
     @Column(name = "Login", unique = true)
     private String login;
 
-    @NotNull
+    @NotBlank(message = "Name is mandatory")
     @Column(name = "Password")
     private String password;
 
-    @NotNull
+    @NotBlank(message = "Name is mandatory")
     @Column(name = "Mail")
     private String mail;
 

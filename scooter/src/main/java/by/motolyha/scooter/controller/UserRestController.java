@@ -12,20 +12,18 @@ import javax.validation.Valid;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserRestController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = "/{userId}",
-            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @GetMapping(value = "/{userId}")
     User readUser(@PathVariable Integer userId) {
         return userService.findById(userId);
     }
 
-    @GetMapping(value = "/",
-            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @GetMapping(value = "/")
     Collection<User> readUsers() {
         return userService.findAll();
     }

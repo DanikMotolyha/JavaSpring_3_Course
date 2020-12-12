@@ -1,7 +1,7 @@
 package by.motolyha.scooter.config;
 
 import by.motolyha.scooter.service.ScooterService;
-import by.motolyha.scooter.service.ScooterServiceImpl;
+import by.motolyha.scooter.service.impl.ScooterServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
