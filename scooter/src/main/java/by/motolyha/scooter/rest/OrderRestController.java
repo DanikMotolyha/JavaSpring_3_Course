@@ -31,5 +31,4 @@ public class OrderRestController {
     List<Orders> getAll() {
         return orderService.findAll();
     }
-
 }

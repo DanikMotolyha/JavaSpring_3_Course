@@ -17,15 +17,8 @@ import java.io.IOException;
 @RestController
 @RequestMapping
 public class ScooterRestController {
-
     @Autowired
     private ScooterServiceImpl scooterService;
-
-    @GetMapping(value = "/{scooterId}")
-    ResponseEntity<?> readUser(@PathVariable Integer scooterId) throws IOException {
-        return new ResponseEntity<>(scooterService.findById(scooterId), HttpStatus.OK);
-    }
-
     @PostMapping(value = "/scooter/all")
     ResponseEntity<?> readScooters() {
         return new ResponseEntity<>(scooterService.findAll(), HttpStatus.OK);
@@ -37,8 +30,8 @@ public class ScooterRestController {
     }
 
     @GetMapping(value = "/admin/SearchScooterById/{scooterId}")
-    ResponseEntity<?> updateScooter(@PathVariable int scooterId) {
-        return new ResponseEntity<Scooter>(scooterService.findById(scooterId), HttpStatus.OK);
+    ResponseEntity<?> updateScooter(@PathVariable Integer scooterId) {
+        return new ResponseEntity<>(scooterService.findById(scooterId), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/admin/deleteScooterById")
@@ -56,6 +49,4 @@ public class ScooterRestController {
     void createScooter(@RequestBody @Valid ScooterDto scooter) {
         scooterService.save(new Scooter(scooter.getName(), scooter.getPrice()));
     }
-
-
 }
