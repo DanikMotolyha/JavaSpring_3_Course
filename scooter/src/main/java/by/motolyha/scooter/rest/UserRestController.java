@@ -58,8 +58,5 @@ public class UserRestController {
     }
 
 
-    @GetMapping("/getUser/{login}")
-    ResponseEntity<User> getUserByLogin(@PathVariable @Valid String login) {
-        return new ResponseEntity<>(userService.findByLogin(login), HttpStatus.OK);
-    }
+
 }

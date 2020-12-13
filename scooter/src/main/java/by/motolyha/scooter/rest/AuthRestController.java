@@ -7,10 +7,8 @@ import by.motolyha.scooter.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 @RestController
 public class AuthRestController {
@@ -45,5 +43,9 @@ public class AuthRestController {
         String token = jwtProvider.generateToken(user.getLogin());
         AuthResponse authResponse = new AuthResponse(token, user.getLogin());
         return new ResponseEntity<>(authResponse, HttpStatus.OK);
+    }
+    @GetMapping("/getUser/{login}")
+    ResponseEntity<User> getUserByLogin(@PathVariable @Valid String login) {
+        return new ResponseEntity<>(userService.findByLogin(login), HttpStatus.OK);
     }
 }
