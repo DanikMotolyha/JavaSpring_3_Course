@@ -15,6 +15,9 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
     <style>
+        .someList {
+            height: 400px;
+        }
         div.Order_enemy {
              display:inline-block;
              color: red; /* Цвет текста */
@@ -30,8 +33,29 @@
             padding-left: 15px; /* Расстояние от линии до текста */
         }
         .inlineBl {
-            display:inline-block;
-            margin-left: 20px;
+            margin-left: 50px;
+        }
+        .update {
+            margin: 20px; /* Отступ слева */
+            border-left: 1px solid navy; /* Граница слева от текста */
+            padding-left: 15px; /* Расстояние от линии до текста */
+        }
+        .create {
+            margin: 20px; /* Отступ слева */
+            border-left: 1px solid navy; /* Граница слева от текста */
+            padding-left: 15px; /* Расстояние от линии до текста */
+        }
+        .delete {
+             margin: 20px; /* Отступ слева */
+             border-left: 1px solid navy; /* Граница слева от текста */
+             padding-left: 15px; /* Расстояние от линии до текста */
+         }
+        body {
+            background: #ECD2BD;
+            color: #A8825F;
+        }
+        button {
+            color: #C06539;
         }
     </style>
 </head>
@@ -61,12 +85,7 @@
             <div class="logReg">
 
             </div>
-        </div>
-        <div class="col-sm">
-            <input type="hidden">
-            <div class="personalInfo">
 
-            </div>
             <div class="create">
 
             </div>
@@ -79,16 +98,18 @@
             <div class="search">
 
             </div>
-            <div id="errMes">
-
-            </div>
         </div>
         <div class="col-sm">
             <div class="someList"></div>
             <div class="nextPrev"></div>
         </div>
-
-
+    </div>
+    <div class="col-sm">
+            <input type="hidden">
+        <div class="personalInfo">
+            <div id="errMes">
+            </div>
+        </div>
     </div>
 </div>
 <div class="neededInfo">

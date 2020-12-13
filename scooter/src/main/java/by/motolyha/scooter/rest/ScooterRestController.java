@@ -1,21 +1,21 @@
 package by.motolyha.scooter.rest;
 
 
+import by.motolyha.scooter.dto.ScooterDto;
+import by.motolyha.scooter.dto.ScooterDtoId;
 import by.motolyha.scooter.model.Scooter;
+import by.motolyha.scooter.model.ScooterDtoFull;
 import by.motolyha.scooter.service.impl.ScooterServiceImpl;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.io.StringWriter;
 
 @RestController
-@RequestMapping("/scooter")
+@RequestMapping
 public class ScooterRestController {
 
     @Autowired
@@ -26,7 +26,7 @@ public class ScooterRestController {
         return new ResponseEntity<>(scooterService.findById(scooterId), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/all")
+    @PostMapping(value = "/scooter/all")
     ResponseEntity<?> readScooters() {
         return new ResponseEntity<>(scooterService.findAll(), HttpStatus.OK);
     }
@@ -36,14 +36,25 @@ public class ScooterRestController {
         scooterService.save(scooter);
     }
 
-    @PutMapping(value = "/{scooterId}")
-    void updateScooter(@RequestBody @Valid Scooter scooter, @PathVariable int scooterId) {
-        scooterService.update(scooter, scooterId);
+    @GetMapping(value = "/admin/SearchScooterById/{scooterId}")
+    ResponseEntity<?> updateScooter(@PathVariable int scooterId) {
+        return new ResponseEntity<Scooter>(scooterService.findById(scooterId), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/{scooterId}")
-    void deleteScooter(@PathVariable int scooterId) {
-        scooterService.delete(scooterId);
+    @DeleteMapping(value = "/admin/deleteScooterById")
+    void deleteScooter(@RequestBody @Valid ScooterDtoId id) {
+        scooterService.delete(id.getId());
+    }
+
+    @PostMapping(value = "/admin/updateScooter")
+    void updateScooter(@RequestBody @Valid ScooterDtoFull scooter) {
+        scooterService.update(new Scooter(scooter.getName(), scooter.getPrice()), scooter.getId());
+    }
+
+
+    @PostMapping(value = "/admin/createScooter")
+    void createScooter(@RequestBody @Valid ScooterDto scooter) {
+        scooterService.save(new Scooter(scooter.getName(), scooter.getPrice()));
     }
 
 
