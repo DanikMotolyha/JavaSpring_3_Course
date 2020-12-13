@@ -1,25 +1,26 @@
-package by.motolyha.scooter.controller;
+package by.motolyha.scooter.rest;
 
 import by.motolyha.scooter.config.jwt.JwtProvider;
 import by.motolyha.scooter.dto.*;
 import by.motolyha.scooter.model.User;
-import by.motolyha.scooter.model.UserType;
-import by.motolyha.scooter.service.UserService;
 import by.motolyha.scooter.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 @RestController
-public class AuthController {
+public class AuthRestController {
     @Autowired
     private UserServiceImpl userService;
     @Autowired
     private JwtProvider jwtProvider;
 
     @PostMapping("/register")
-    public String registerUser(@RequestBody @Valid UserDto user) {
+    public ResponseEntity<?> registerUser(@RequestBody @Valid UserDto user) {
         User userEntity = new User(
                 user.getUsername(),
                 user.getSerName(),
@@ -28,15 +29,21 @@ public class AuthController {
                 user.getMail()
         );
         userService.save(userEntity);
-        return "OK";
+        return new ResponseEntity<>(HttpStatus.OK);
     }
-
-    @PostMapping("/auth")
-    public String auth(@RequestBody @Valid UserAuthDto user) {
+    @PostMapping("/authorized")
+    public ResponseEntity<?> isAuthorized() {
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @PostMapping("/login")
+    public ResponseEntity<?> auth(@RequestBody @Valid UserAuthDto user) {
         User userEntity = userService.findByLoginAndPassword(user.getLogin(), user.getPassword());
         if(userEntity == null){
-            return "Invalid login or password";
+            String errorMsg = "Invalid login or password";
+            return new ResponseEntity<>(errorMsg, HttpStatus.CONFLICT);
         }
-        return jwtProvider.generateToken(userEntity.getLogin());
+        String token = jwtProvider.generateToken(user.getLogin());
+        AuthResponse authResponse = new AuthResponse(token, user.getLogin());
+        return new ResponseEntity<>(authResponse, HttpStatus.OK);
     }
 }

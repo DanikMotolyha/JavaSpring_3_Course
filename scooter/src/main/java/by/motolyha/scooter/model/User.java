@@ -1,6 +1,7 @@
 package by.motolyha.scooter.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.web.bind.annotation.Mapping;
 
@@ -13,7 +14,7 @@ import java.util.Set;
 @Entity
 @Data
 @Table(name = "users")
-public class User implements Serializable {
+public class User {
 
     @Id
     @NotBlank(message = "Name is mandatory")
@@ -40,6 +41,7 @@ public class User implements Serializable {
     @Column(name = "Mail")
     private String mail;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     Set<Orders> orders;
 

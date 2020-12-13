@@ -1,9 +1,12 @@
 package by.motolyha.scooter.service.impl;
 
+import by.motolyha.scooter.config.jwt.JwtProvider;
 import by.motolyha.scooter.exception.NoDataFoundException;
 import by.motolyha.scooter.exception.UserNotFoundException;
+import by.motolyha.scooter.model.Orders;
 import by.motolyha.scooter.model.User;
 import by.motolyha.scooter.model.UserType;
+import by.motolyha.scooter.repository.OrderRepository;
 import by.motolyha.scooter.repository.UserRepository;
 import by.motolyha.scooter.repository.UserTypeRepository;
 import by.motolyha.scooter.service.UserService;
@@ -13,20 +16,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+
+
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private UserTypeRepository UserTypeRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
-
+    @Override
     public User findByLogin(String login){
         return userRepository.findByLogin(login);
     }
@@ -49,12 +57,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAll() {
-        List<User> users = userRepository.findAll();
-        if (users.isEmpty()) {
-            throw new NoDataFoundException("Users");
-        }
-        return users;
+        return userRepository.findAll();
     }
+
+
     public User findByLoginAndPassword(String login, String password) {
         User userEntity = findByLogin(login);
         if (userEntity != null) {

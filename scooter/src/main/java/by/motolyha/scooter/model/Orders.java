@@ -2,6 +2,7 @@ package by.motolyha.scooter.model;
 
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,6 +11,7 @@ import java.sql.Date;
 
 @Entity
 @Data
+@NoArgsConstructor
 @Table(name = "orders")
 public class Orders implements Serializable {
 
@@ -37,4 +39,12 @@ public class Orders implements Serializable {
     @ManyToOne
     @JoinColumn(name = "Scooter_id")
     Scooter scooter;
+
+    public Orders(int count, Date startRent, Date endRent, User user, Scooter scooter){
+        this.count = count;
+        this.startRent = startRent;
+        this.endRent = endRent;
+        this.user = user;
+        this.scooter = scooter;
+    }
 }

@@ -5,4 +5,6 @@ import by.motolyha.scooter.model.User;
 
 public interface UserService  extends CrudService<User>{
     User findById(int id);
+
+    User findByLogin(String userName);
 }

@@ -1,4 +1,4 @@
-package by.motolyha.scooter.controller;
+package by.motolyha.scooter.rest;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;

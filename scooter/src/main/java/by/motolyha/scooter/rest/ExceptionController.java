@@ -1,4 +1,4 @@
-package by.motolyha.scooter.controller;
+package by.motolyha.scooter.rest;
 
 import by.motolyha.scooter.exception.NoDataFoundException;
 import by.motolyha.scooter.exception.UserNotFoundException;
@@ -47,7 +47,6 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex, HttpHeaders headers,
             HttpStatus status, WebRequest request) {
-
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDate.now());
         body.put("status", status.value());

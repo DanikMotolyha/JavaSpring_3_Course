@@ -1,5 +1,6 @@
 package by.motolyha.scooter.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -24,6 +25,7 @@ public class Scooter implements Serializable {
     @Column(name = "Price")
     private int price;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "scooter")
     Set<Orders> orders;
 }
