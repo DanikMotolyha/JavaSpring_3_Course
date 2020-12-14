@@ -3,6 +3,7 @@ package by.motolyha.scooter.rest;
 
 import by.motolyha.scooter.dto.OrderDtoId;
 import by.motolyha.scooter.model.Orders;
+import by.motolyha.scooter.sender.Send;
 import by.motolyha.scooter.service.impl.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ public class OrderRestController {
 
     @PostMapping(value = "/order")
     void addUser(@RequestBody @Valid Orders order) {
+        Send.INSTANCE.send("NewOrder", order.toString(), order.getUser().getMail());
         orderService.save(order);
     }
 

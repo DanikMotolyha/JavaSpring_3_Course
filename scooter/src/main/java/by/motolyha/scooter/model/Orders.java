@@ -47,4 +47,14 @@ public class Orders implements Serializable {
         this.user = user;
         this.scooter = scooter;
     }
+
+    @Override
+    public String toString() {
+        return "You gen new order" +
+                "\ncount = " + count +
+                "\nstartRent = " + startRent +
+                "\nendRent = " + endRent +
+                "\nuser = " + user.getLogin() +
+                "\nscooter = " + scooter.getName();
+    }
 }
